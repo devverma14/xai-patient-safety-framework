@@ -7,14 +7,6 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?logo=typescript)](https://www.typescriptlang.org)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-06B6D4?logo=tailwindcss)](https://tailwindcss.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Academic Status](https://img.shields.io/badge/B.Tech%20Major%20Project-GNIOT%20%2F%20AKTU-blue)](https://aktu.ac.in)
-
-> **Academic Affiliation:** Greater Noida Institute of Technology (GNIOT) / Dr. A.P.J. Abdul Kalam Technical University (AKTU), Lucknow, Uttar Pradesh, India  
-> **Department:** Department of Computer Science & Engineering (Artificial Intelligence & Machine Learning)  
-> **Authors:** Dev Verma, Ashish Kumar Singh, Anshuman Tripathi  
-> **Project Supervisor:** Dr. Mohd Jawed Khan  
-> **Academic Session:** 2025–2026  
-
 ---
 
 ## 1. Overview
@@ -25,7 +17,7 @@ The platform spans **five diagnostic modules**:
 1. **Clinical Laboratory Report Understanding:** Deterministic OCR (Tesseract 5.x) and regex extraction engine evaluating biological reference intervals without statistical guesswork.
 2. **Pediatric Pneumonia Detection:** DenseNet-121 on frontal chest radiographs with layer-targeted Grad-CAM visual attribution.
 3. **Pulmonary Tuberculosis Screening:** DenseNet-121 on multi-site chest radiographs with apical parenchymal cavity attribution.
-4. **Dermoscopic Skin Lesion Triage:** DenseNet-121 production baseline operating at a sensitivity-prioritized threshold ($t=0.40$), alongside prominent experimental research models (**E1 fine-tuned: 81.83% accuracy**; **E7 soft-voting ensemble: 79.00% accuracy, 0.9206 AUROC**).
+4. **Dermoscopic Skin Lesion Triage:** DenseNet-121 production checkpoint (canonical benchmark: **74.29% accuracy** at $t=0.50$; deployed API triage setting: **68.37% accuracy, 94.95% sensitivity** at $t=0.40$), alongside separate offline experimental research models (**E1 fine-tuned: 81.83% accuracy**; **E7 ensemble: 79.00% accuracy, 0.9206 AUROC**).
 5. **Diabetic Retinopathy Screening:** Compound-scaled EfficientNet-B0 on digital fundus photography with macular microvascular attribution.
 
 ---
@@ -35,15 +27,15 @@ The platform spans **five diagnostic modules**:
 Deep learning models achieve diagnostic accuracy comparable to medical specialists on benchmark datasets. However, deploying them in safety-critical clinical environments introduces severe patient safety risks:
 - **The Black-Box Failure Mode:** Standard convolutional networks produce scalar probability scores without explaining which anatomical regions drove the decision. A model can achieve 95% accuracy by learning confounding hospital markers, radiographic orientation tags, or imaging artifacts rather than genuine pathology.
 - **Garbage-In, Catastrophe-Out:** Conventional inference APIs silently process out-of-distribution, severely blurred, inverted, or non-medical images, generating high-confidence false predictions on uninterpretable data.
-- **Asymmetric Risk in Oncology:** Standard 0.50 decision thresholds optimize overall accuracy at the expense of false negatives. In melanoma triage, a missed cancer is life-threatening, whereas a false alarm triggers a non-invasive dermoscopic biopsy.
+- **Asymmetric Risk in Oncology:** Standard 0.50 decision thresholds optimize overall accuracy at the expense of false negatives. In an investigational triage setting, false negatives carry high risk by potentially delaying clinical review of suspicious lesions, whereas false positives increase clinician review burden or follow-up examination.
 
-This project implements a multi-tier safety architecture: **Defensive Quality Gates** intercept invalid inputs before inference, **Layer-Specific Grad-CAM** highlights causal pathological features, and **Sensitivity-Prioritized Thresholding** protects clinical safety.
+This project implements a multi-tier defensive architecture: **Defensive Quality Gates** intercept invalid inputs before inference, **Layer-Specific Grad-CAM** provides visual attribution for class-discriminative regions, and **Sensitivity-Prioritized Thresholding** provides an alternative research operating point that trades specificity for higher sensitivity.
 
 ---
 
 ## 3. Core Objectives
 
-1. Develop a unified, multi-modal clinical decision-support framework covering radiological, dermatological, retinal, and biochemical diagnostic data.
+1. Develop a unified, multi-modal research decision-support framework covering radiological, dermatological, retinal, and biochemical data modalities.
 2. Integrate mathematical Gradient-Weighted Class Activation Mapping (Grad-CAM) directly into the inference lifecycle, generating synchronized raw, heatmap, and overlay views.
 3. Establish defensive pre-inference quality checks (MIME validation, dimension gating, and Laplacian focus blur estimation).
 4. Build a deterministic laboratory report understanding module that extracts biomarkers and compares them against physiological reference ranges with zero statistical imputation.
@@ -55,9 +47,9 @@ This project implements a multi-tier safety architecture: **Defensive Quality Ga
 
 - **Decoupled Four-Tier Architecture:** Complete separation between the Presentation Tier (Next.js 16/React 19), Application API Gateway (FastAPI/Pydantic), Inference Tier (PyTorch/torchvision), and Storage/Audit Tier.
 - **Defensive Input Quality Gates:** Rejects unreadable inputs using Laplacian focus variance ($\sigma^2 < 100.0$) and MIME type sniffing before model execution.
-- **Three-View Synchronized Explainability:** Presents the clinician with the original raw image, isolated jet saliency map, and interactive alpha-blended diagnostic overlay with dynamic opacity controls.
+- **Three-View Synchronized Explainability:** Presents the user with the original raw image, isolated jet saliency map, and interactive alpha-blended attribution overlay with dynamic opacity controls.
 - **Zero Imputation Policy:** If a laboratory document lacks an analyte or unit, the system triggers a `review_required = True` flag rather than guessing synthetic values.
-- **In-Memory Ephemeral Processing:** Patient imagery is converted to memory buffers (`io.BytesIO()`) and processed without persistent local caching, preserving patient data privacy.
+- **In-Memory Ephemeral Processing:** Patient imagery is converted to memory buffers (`io.BytesIO()`) and processed without persistent local caching, reducing persistent local storage of uploaded patient imagery during processing.
 
 ---
 
@@ -80,13 +72,15 @@ This project implements a multi-tier safety architecture: **Defensive Quality Ga
 - **Performance (120 Multi-Site Test CXRs):** **85.83% Accuracy**, **81.36% Sensitivity**, **90.16% Specificity**, **0.9228 AUROC**, **0.9353 PR-AUC**.
 
 ### Module 4: Dermoscopic Skin Lesion Risk Triage
-- **Production Baseline Model:** DenseNet-121 evaluated on 1,486 lesion-grouped HAM10000 images using TorchVision Bilinear interpolation.
-  - **Deployed Threshold ($t=0.40$):** **68.37% Accuracy**, **94.95% Sensitivity** (only 14 missed malignancies out of 277), **62.28% Specificity**, **0.8806 AUROC**, **0.5975 PR-AUC**.
-  - **Standard Threshold ($t=0.50$):** **74.29% Accuracy**, **91.70% Sensitivity**, **70.31% Specificity** (23 missed malignancies).
-- **Prominent Research Breakthroughs (E1 & E7):**
-  - **Experiment E1 (Partial Fine-Tuning):** DenseNet-121 with `denseblock4` unfrozen ($	ext{lr}=10^{-5}$). Achieves **81.83% Accuracy**, **84.84% Sensitivity**, **81.14% Specificity**, **0.9127 AUROC**, and **0.7242 PR-AUC** at $t=0.50$, slashing false alarms by 50% (from 456 down to 228).
-  - **Experiment E7 (Soft-Voting Ensemble):** Weighted ensemble ($0.55	ext{E1} + 0.45	ext{E3}$). Achieves **79.00% Accuracy**, **90.25% Sensitivity**, and project-high **0.9206 AUROC** at $t=0.50$; or **74.16% Accuracy**, **94.22% Sensitivity**, and **98.13% NPV** at $t=0.42$.
-
+- **Architecture & Dataset Split:** DenseNet-121 initialized with ImageNet weights, trained with class-weighted cross-entropy on 7,015 images from HAM10000 (1,514 validation). Evaluated on an independent, strictly isolated held-out test cohort of 1,486 images (277 malignant, 1,209 benign) with zero cross-split lesion_id overlap (lesion-level grouping across 7,470 unique lesions, ensuring images of the same lesion never cross splits).
+- **Production Checkpoint (models/skin/binary/best_skin_binary_model.pt):**
+  - **Canonical Checkpoint Benchmark ($t=0.50$):** **74.29% Accuracy**, **81.00% Balanced Accuracy**, **91.70% Sensitivity**, **70.31% Specificity**, **0.8806 AUROC**, **0.5975 PR-AUC** (TN=850, FP=359, FN=23, TP=254). Represents the standard, uncalibrated baseline classification performance of the trained neural network weights.
+  - **Deployed API Triage Configuration ($t=0.40$):** **68.37% Accuracy**, **78.61% Balanced Accuracy**, **94.95% Sensitivity**, **62.28% Specificity**, **0.8806 AUROC**, **0.5975 PR-AUC** (TN=753, FP=456, FN=14, TP=263). The deployed FastAPI endpoint (`/api/v1/skin/predict/ham10000`) and React frontend are actively configured with this sensitivity-prioritized triage threshold ($t=0.40$) to minimize missed potential malignancies in an investigational second-reader triage context (reducing false negatives from 23 down to 14, at the trade-off of additional false alarms).
+- **Controlled Experimental Evaluation (E0 — Separate Bicubic Preprocessing):**
+  - In a separate controlled evaluation harness using Pillow Bicubic in-memory image downsampling (rather than the TorchVision Bilinear interpolation used by the production API), the identical checkpoint achieves **75.17% Accuracy**, **90.25% Sensitivity**, **71.71% Specificity**, and **0.8787 AUROC** (TN=867, FP=342, FN=27, TP=250) at $t=0.40$, and **81.29% Accuracy** at $t=0.50$. This 6.80 percentage-point accuracy difference at $t=0.40$ coincides with differences between the evaluation preprocessing pipelines (e.g., Pillow Bicubic in-memory caching vs TorchVision Bilinear loading); further controlled testing is required to isolate the exact contributing causes. E0 is documented strictly as an offline controlled experimental evaluation.
+- **Research Ablation & Ensemble Experiments (Not Deployed in Production API):**
+  - **Experiment E1 (Partial Fine-Tuning, $t=0.50$):** Fine-tuning `denseblock4` with $\text{lr}=10^{-5}$ achieves **81.83% Accuracy**, **84.84% Sensitivity**, **81.14% Specificity**, **0.9127 AUROC**, and **0.7242 PR-AUC**, reducing false positives by 50% (from 456 down to 228) compared to the deployed baseline triage configuration at $t=0.40$ (not a matched-threshold comparison; against the standard $t=0.50$ baseline of 359 FP, E1 reduces false positives by 36.5%).
+  - **Experiment E7 (Soft-Voting Ensemble, $t=0.50$):** Weighted ensemble ($0.55 \times \text{E1} + 0.45 \times \text{E3}$) achieves **79.00% Accuracy**, **90.25% Sensitivity**, **76.43% Specificity**, and project-high **0.9206 AUROC**; or **74.16% Accuracy** and **94.22% Sensitivity** at $t=0.42$. Both E1 and E7 are offline research candidates and are not loaded by the deployed API.
 ### Module 5: Diabetic Retinopathy Fundus Screening
 - **Architecture:** EfficientNet-B0 utilizing compound scaling ($d=1.0, w=1.0, r=224$).
 - **Target Grad-CAM Hook:** `features.8.0` (final pointwise convolutional layer).
@@ -147,14 +141,13 @@ This project implements a multi-tier safety architecture: **Defensive Quality Ga
 
 Grad-CAM calculates the importance of feature map $k$ for target class $c$ by computing the global average pooling of gradients:
 
-$$lpha_k^c = rac{1}{Z} \sum_{i=1}^{U} \sum_{j=1}^{V} rac{\partial Y^c}{\partial A_{i,j}^k}$$
+$$\alpha_k^c = \frac{1}{Z} \sum_{i=1}^{U} \sum_{j=1}^{V} \frac{\partial Y^c}{\partial A_{i,j}^k}$$
 
-where $Y^c$ is the pre-softmax model score for class $c$, $A_{i,j}^k$ is the activation at spatial coordinate $(i,j)$ of feature map $k$, and $Z = U 	imes V$ is the spatial dimensions.
+where $Y^c$ is the pre-softmax model score for class $c$, $A_{i,j}^k$ is the activation at spatial coordinate $(i,j)$ of feature map $k$, and $Z = U \times V$ is the spatial dimensions.
 
 The coarse class-discriminative saliency map is formed via a rectified linear combination:
 
-$$L_{	ext{Grad-CAM}}^c = 	ext{ReLU}\left( \sum_{k} lpha_k^c A^k 
-ight)$$
+$$L_{\text{Grad-CAM}}^c = \text{ReLU}\left( \sum_{k} \alpha_k^c A^k \right)$$
 
 ### Implementation Hooks in Codebase:
 - **DenseNet-121:** Registered on `features.denseblock4.denselayer16.conv2`.
@@ -162,16 +155,12 @@ ight)$$
 
 ### Quantitative Faithfulness Validation (Pixel Deletion Test):
 When the top-20% most salient pixels identified by Grad-CAM are masked across 20 verified true positive cases, target model confidence degrades significantly:
-- **Tuberculosis CXR:** $-61.16\%$ drop ($0.824 
-ightarrow 0.320$)
-- **Skin Lesion:** $-49.81\%$ drop ($0.781 
-ightarrow 0.392$)
-- **Diabetic Retinopathy:** $-28.43\%$ drop ($0.985 
-ightarrow 0.705$)
-- **Pneumonia CXR:** $-14.27\%$ drop ($0.897 
-ightarrow 0.769$)
+- **Tuberculosis CXR:** $-61.16\%$ drop ($0.824 \rightarrow 0.320$)
+- **Skin Lesion:** $-49.81\%$ drop ($0.781 \rightarrow 0.392$)
+- **Diabetic Retinopathy:** $-28.43\%$ drop ($0.985 \rightarrow 0.705$)
+- **Pneumonia CXR:** $-14.27\%$ drop ($0.897 \rightarrow 0.769$)
 
-This confirms that the visual heatmaps correspond to causally relevant pathological features rather than background noise.
+These pixel-deletion results provide an empirical measure of model sensitivity to regions highlighted by Grad-CAM. They do not establish causal pathological localization.
 
 ---
 
@@ -180,14 +169,10 @@ This confirms that the visual heatmaps correspond to causally relevant pathologi
 To prevent uninterpretable images from generating misleading predictions, the platform enforces three mandatory pre-inference gates (`backend/app/services/validation_service.py`):
 
 1. **Magic Bytes MIME Validation:** Inspects raw file header bytes to confirm genuine JPEG, PNG, or PDF formats; rejects non-medical payloads (.exe, .zip, .sh).
-2. **Dimension & Aspect Ratio Verification:** Ensures minimum pixel dimensions ($224 	imes 224$) and valid image channels.
+2. **Dimension & Aspect Ratio Verification:** Ensures minimum pixel dimensions ($224 \times 224$) and valid image channels.
 3. **Laplacian Focus Blur Estimation:** Computes the variance of the 2D Laplacian operator over the grayscale input image $I$:
-   $$	ext{Blur Score} = 	ext{Var}(
-abla^2 I) = rac{1}{N} \sum_{x,y} \left( 
-abla^2 I(x,y) - \mu_{
-abla^2 I} 
-ight)^2$$
-   Images with $	ext{Blur Score} < 100.0$ are automatically intercepted with HTTP 400 Bad Request and an explicit request to recapture.
+   $$\text{Blur Score} = \text{Var}(\nabla^2 I) = \frac{1}{N} \sum_{x,y} \left( \nabla^2 I(x,y) - \mu_{\nabla^2 I} \right)^2$$
+   Images with $\text{Blur Score} < 100.0$ are automatically intercepted with HTTP 400 Bad Request and an explicit request to recapture.
 
 ---
 
@@ -249,8 +234,8 @@ ight)^2$$
 
 ### 1. Clone the Repository:
 ```bash
-git clone https://github.com/your-username/xai-patient-safety.git
-cd xai-patient-safety
+git clone https://github.com/devverma14/xai-patient-safety-framework.git
+cd xai-patient-safety-framework
 ```
 
 ### 2. Configure Python Virtual Environment & Dependencies:
@@ -297,7 +282,7 @@ In a separate terminal window:
 cd frontend
 npm run dev
 ```
-The clinical interface will be accessible in your web browser at `http://localhost:3000`.
+The web interface will be accessible in your web browser at `http://localhost:3000`.
 
 ---
 
@@ -330,23 +315,24 @@ pytest tests/test_backend_api.py -v
 ## 15. Verified Empirical Results
 
 ### Primary Multi-Modal Benchmark Performance:
-| Diagnostic Task | Model Architecture | Test Cohort Size | Accuracy | Sensitivity | Specificity | AUROC | PR-AUC | Primary Confusion Matrix |
-|---|---|---:|---:|---:|---:|---:|---:|---|
-| **Pneumonia (CXR)** | DenseNet-121 | 910 images | **90.66%** | **90.15%** | **92.08%** | **0.9621** | **0.9866** | TP=604, TN=221, FP=19, FN=66 |
-| **Tuberculosis (CXR)** | DenseNet-121 | 120 images | **85.83%** | **81.36%** | **90.16%** | **0.9228** | **0.9353** | TP=48, TN=55, FP=6, FN=11 |
-| **Skin Lesion (Deployed)** | DenseNet-121 ($t=0.40$) | 1,486 images | **68.37%** | **94.95%** | **62.28%** | **0.8806** | **0.5975** | TP=263, TN=753, FP=456, FN=14 |
-| **Skin Lesion (Standard)** | DenseNet-121 ($t=0.50$) | 1,486 images | **74.29%** | **91.70%** | **70.31%** | **0.8806** | **0.5975** | TP=254, TN=850, FP=359, FN=23 |
-| **Diabetic Retinopathy** | EfficientNet-B0 | 547 images | **97.99%** | **98.55%** | **97.42%** | **0.9958** | **0.9958** | TP=272, TN=264, FP=7, FN=4 |
-| **Laboratory Reports** | Tesseract 5.x + Rules | 44 parameters | **100.0%** | N/A | N/A | N/A | N/A | Deterministic syntactic parsing |
+| Diagnostic Task | Model Architecture & Configuration | Held-Out Test Cohort | Accuracy | Sensitivity (Recall) | Specificity | AUROC | PR-AUC | Primary Confusion Matrix | Operating Context |
+|---|---|---:|---:|---:|---:|---:|---:|---|---|
+| **Pneumonia (CXR)** | DenseNet-121 ($t=0.50$) | 910 images | **90.66%** | **90.15%** | **92.08%** | **0.9621** | **0.9866** | TP=604, TN=221, FP=19, FN=66 | Standard decision threshold ($t=0.50$) |
+| **Tuberculosis (CXR)** | DenseNet-121 ($t=0.50$) | 120 images | **85.83%** | **81.36%** | **90.16%** | **0.9228** | **0.9353** | TP=48, TN=55, FP=6, FN=11 | Site-stratified test split ($t=0.50$) |
+| **Skin Lesion (Canonical Benchmark)** | DenseNet-121 ($t=0.50$) | 1,486 images | **74.29%** | **91.70%** | **70.31%** | **0.8806** | **0.5975** | TP=254, TN=850, FP=359, FN=23 | Canonical uncalibrated benchmark (~74.3% accuracy) |
+| **Skin Lesion (Deployed Triage API)** | DenseNet-121 ($t=0.40$) | 1,486 images | **68.37%** | **94.95%** | **62.28%** | **0.8806** | **0.5975** | TP=263, TN=753, FP=456, FN=14 | Active API runtime setting; sensitivity prioritized (14 missed) |
+| **Diabetic Retinopathy** | EfficientNet-B0 ($t=0.50$) | 547 images | **97.99%** | **98.55%** | **97.42%** | **0.9958** | **0.9958** | TP=272, TN=264, FP=7, FN=4 | Cryptographic hash-isolated test split ($t=0.50$) |
+| **Laboratory Reports** | Tesseract 5.x + Rules | 44 parameters | **100.0%** | N/A | N/A | N/A | N/A | Deterministic field extraction | Rule-based syntactic parsing (0.0% ML) |
 
-### Skin Lesion Research Breakthroughs (E1 & E7 Candidates):
-| Candidate Configuration | Strategy | Operating Threshold | Accuracy | Sensitivity | Specificity | AUROC | Role & Status |
-|---|---|:---:|:---:|:---:|:---:|:---:|---|
-| **Production Baseline (Deployed)** | Frozen Baseline | **0.40** | **68.37%** | **94.95%** | **62.28%** | **0.8806** | **Deployed Production System (14 FN)** |
-| **E1 — Partial Fine-Tuning** | Block 4 Unfrozen | **0.50** | **81.83%** | **84.84%** | **81.14%** | **0.9127** | **Peak Single-Model Research Accuracy** |
-| *E1 — Balanced Operating Point* | Block 4 Unfrozen | 0.45 | **79.95%** | **88.81%** | **77.92%** | **0.9127** | Balanced Research Point (Bal Acc 83.36%) |
-| **E7 — Soft-Voting Ensemble** | Ensemble ($0.55	ext{E1}+0.45	ext{E3}$) | **0.50** | **79.00%** | **90.25%** | **76.43%** | **0.9206** | **Peak Overall Research AUROC (0.9206)** |
-| *E7 — Clinical Triage Point* | Ensemble ($0.55	ext{E1}+0.45	ext{E3}$) | **0.42** | **74.16%** | **94.22%** | **69.56%** | **0.9206** | Near-Production Recall (16 FN), +88 Specificity |
+### Controlled Experimental Evaluations & Research Experiments (Not Deployed in Production API):
+| Experiment / Candidate | Architecture & Strategy | Operating Threshold | Accuracy | Sensitivity | Specificity | AUROC | PR-AUC | Primary Confusion Matrix | Technical Scope & Status |
+|---|---|:---:|---:|---:|---:|---:|---:|---|---|
+| **Controlled E0 Evaluation** | DenseNet-121 (Pillow Bicubic Preprocessing) | **0.40** | **75.17%** | **90.25%** | **71.71%** | **0.8787** | **0.5915** | TP=250, TN=867, FP=342, FN=27 | Controlled re-run with Bicubic interpolation (experimental comparison only) |
+| *Controlled E0 Evaluation* | DenseNet-121 (Pillow Bicubic Preprocessing) | 0.50 | **81.29%** | **79.06%** | **81.80%** | **0.8787** | **0.5915** | TP=219, TN=989, FP=220, FN=58 | Controlled re-run at standard threshold |
+| **Research E1 (Fine-Tuning)** | DenseNet-121 (denseblock4 unfrozen, lr=10^-5) | **0.50** | **81.83%** | **84.84%** | **81.14%** | **0.9127** | **0.7242** | TP=235, TN=981, FP=228, FN=42 | Experimental candidate at t=0.50; reduces FP by 50% vs deployed t=0.40 triage baseline (offline research) |
+| *Research E1 (Balanced)* | DenseNet-121 (denseblock4 unfrozen, lr=10^-5) | 0.45 | **79.95%** | **88.81%** | **77.92%** | **0.9127** | **0.7242** | TP=246, TN=942, FP=267, FN=31 | Experimental candidate at balanced operating point |
+| **Research E7 (Ensemble)** | Soft-Voting Ensemble (0.55 * E1 + 0.45 * E3) | **0.50** | **79.00%** | **90.25%** | **76.43%** | **0.9206** | **0.7425** | TP=250, TN=924, FP=285, FN=27 | Experimental ensemble; peak overall AUROC (offline research) |
+| *Research E7 (Triage)* | Soft-Voting Ensemble (0.55 * E1 + 0.45 * E3) | 0.42 | **74.16%** | **94.22%** | **69.56%** | **0.9206** | **0.7425** | TP=261, TN=841, FP=368, FN=16 | Experimental ensemble triage candidate (offline research) |
 
 ---
 
@@ -361,31 +347,23 @@ pytest tests/test_backend_api.py -v
 
 ## 17. Methodological Limitations & Ethical Safeguards
 
-1. **Coarse Attribution Boundary:** Grad-CAM heatmaps upsampled from $7 	imes 7$ feature maps highlight class-discriminative anatomical regions for clinician verification. They do **not** represent cellular segmentations or surgical margins.
+1. **Coarse Attribution Boundary:** Grad-CAM heatmaps upsampled from $7 \times 7$ feature maps highlight class-discriminative anatomical regions for clinician verification. They do **not** represent cellular segmentations or surgical margins.
 2. **Public Benchmark Metadata Constraints:** Public APTOS 2019 metadata lacks patient identifiers or lateral eye tags. While duplicate image hashes were strictly isolated, bilateral subject correlation cannot be mathematically disproven.
 3. **Domain Shift in Tuberculosis:** Cross-site testing revealed lower sensitivity on the Montgomery cohort (66.67%) compared to Shenzhen (84.00%), reflecting demographic differences and X-ray tube calibration shifts.
 
 ---
 
-## 18. Academic Disclaimer
+## 18. Research Prototype & Responsible-Use Disclaimer
 
-**IMPORTANT NOTICE:** This software is an academic proof-of-concept and research prototype developed for educational and experimental purposes. It is **not certified by the US FDA, CE, or CDSCO** as a Software as a Medical Device (SaMD) for independent diagnostic use, automated prescribing, or unsupervised patient triage. All outputs and attribution heatmaps must be independently reviewed by a qualified healthcare provider.
+**IMPORTANT NOTICE:** This software is a research prototype developed strictly for educational, scientific, and experimental evaluation. It is **not certified by the US FDA, CE, or CDSCO** as a Software as a Medical Device (SaMD) for standalone diagnostic use, automated prescribing, or unsupervised patient triage.
 
----
-
-## 19. Contributors & Academic Supervision
-
-### Student Engineering Team:
-- **Dev Verma** - Department of Computer Science & Engineering (AI & ML)
-- **Ashish Kumar Singh** - Department of Computer Science & Engineering (AI & ML)
-- **Anshuman Tripathi** - Department of Computer Science & Engineering (AI & ML)
-
-### Project Supervisor:
-- **Dr. Mohd Jawed Khan** — Associate Professor, Department of Computer Science & Engineering (Artificial Intelligence & Machine Learning), Greater Noida Institute of Technology (GNIOT), Greater Noida, Uttar Pradesh, India.
+- The system has not undergone prospective clinical trials, does not guarantee diagnostic accuracy or patient-safety outcomes, and must not be used as a substitute for professional medical advice, clinical judgment, diagnosis, or treatment.
+- Visual attribution heatmaps (Grad-CAM) represent coarse, feature-level saliency distributions and do not constitute precise histological boundaries or anatomical segmentations.
+- All model outputs, predictive scores, and visual explanations must be reviewed and verified by a licensed healthcare professional before any clinical consideration.
 
 ---
 
-## 20. Acknowledgements & Literature References
+## 19. Literature References
 
 1. Selvaraju, R. R., et al. (2017). "Grad-CAM: Visual Explanations from Deep Networks via Gradient-Based Localization." *IEEE ICCV*, pp. 618-626.
 2. Huang, G., et al. (2017). "Densely Connected Convolutional Networks." *IEEE CVPR*, pp. 4700-4708.
