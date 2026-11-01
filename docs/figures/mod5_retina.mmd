@@ -1,0 +1,10 @@
+flowchart TD
+    Fundus["Digital Retinal Fundus Photograph (APTOS 2019 Dataset)"] --> Gate["Defensive Quality Gate (Rejects Dark / Blank / Blurry Scans)"]
+    Gate -->|"Passed"| Preproc["Image Standardization (224x224 RGB Tensor)"]
+    Preproc --> EfficientNet["EfficientNet-B0 Compound Scaling Backbone\n(Uniform Depth, Width, and Resolution Scaling)"]
+    EfficientNet --> Decision["Classification (Threshold t = 0.50)\nReferable vs. Non-Referable DR (ROC-AUC = 0.9958, Sensitivity = 98.55%)"]
+    
+    EfficientNet --> Hook["Grad-CAM Saliency Hook on Conv Layer: features.8.0"]
+    Hook --> Saliency["Spatial Localization of Microaneurysms, Exudates & Hemorrhages"]
+    Decision --> UI["Clinical Findings Presentation, Dual Blend Slider & Tele-Ophthalmology Prompt"]
+    Saliency --> UI

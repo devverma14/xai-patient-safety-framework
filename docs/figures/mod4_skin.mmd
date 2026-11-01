@@ -1,0 +1,14 @@
+flowchart TD
+    SkinImg["Dermoscopic Image (HAM10000 Benchmark)"] --> Gate["Defensive Quality Gate (Aspect Ratio <= 5:1, Variance std >= 5.0)"]
+    Gate -->|"Passed"| Preproc["Image Normalization & Tensor Loading (224x224)"]
+    Preproc --> Model["DenseNet-121 + Dropout (0.3)\nComputes Raw Sigmoid Probability p"]
+    
+    Model --> Calib["Patient-Safety Threshold Calibration\nStandard t=0.50: Missed 43 Malignancies (Sensitivity = 84.48%)\nCalibrated t=0.40: Missed 23 Malignancies (Sensitivity = 91.70%)"]
+    Calib --> Triage["Binary Risk Triage Output\nHigher-Risk (Melanoma, BCC, AKIEC) vs. Lower-Risk (Nevus, BKL, DF, VASC)"]
+    
+    Model --> GradCAM["Grad-CAM Localization on Pigment Networks\nConfirms Neural Focus on Lesion Rather than Ruler Markers"]
+    GradCAM --> Blend["Thermal JET Overlay with Interactive Opacity Slider"]
+    
+    LowPPV["Low Precision Clinical Constraint:\nPPV = 41.44% Disallows Autonomous Diagnosis;\nOperates Strictly as a Biopsy Co-Pilot"] -.->|"Clinical Safeguard"| Triage
+    Triage --> Presentation["Clinical Triage Interface with Mandatory Misattribution Disclaimer"]
+    Blend --> Presentation

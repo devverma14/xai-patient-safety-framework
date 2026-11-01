@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-10-29T00:00:00.000Z" agent="Antigravity IDE - Academic Submission" version="21.0.0" type="device">
+  <diagram id="Pneumonia_Workflow" name="Pediatric Pneumonia Workflow">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="20" value="Pediatric Frontal CXR Upload
+(PNG / JPEG)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F2240;strokeColor=#0F2240;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="40" width="220" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="21" value="Defensive Quality Gate
+- Resolution Check (&amp;gt;=100px)
+- Aspect Ratio (&amp;lt;=5:1)
+- Canvas Variance (std&amp;gt;=5.0)
+- Focus Blur (Laplacian var&amp;gt;=10.0)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DC2626;strokeColor=#DC2626;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="120" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="22" value="Image Standardization
+- Bilinear Resize to 224x224
+- Tensor Float Conversion [0.0, 1.0]
+- ImageNet Normalization (mean/std)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#1E293B;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="230" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="23" value="DenseNet-121 Forward Pass
+- 4 DenseBlocks + Transition Layers
+- Global Avg Pool + Sigmoid Activation
+- Decision Threshold: t = 0.50" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#059669;strokeColor=#059669;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="320" width="220" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="24" value="Grad-CAM Saliency Engine
+- Autograd Backward Gradient Hook
+- Layer: features.denseblock4.denselayer16.conv2
+- Gradient Pooling + ReLU Activation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D97706;strokeColor=#D97706;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="320" y="320" width="220" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="25" value="OpenCV Thermal JET Colormap
+- 7x7 Upsampled to 224x224
+- Alpha Blended with Original Radiograph" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#1E293B;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="320" y="415" width="220" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="26" value="Diagnostic Output Display
+- Normal vs. Pneumonia Prediction (AUC: 0.9621)
+- Interactive Opacity Blend Slider (0% - 100%)
+- Biological Misattribution Safety Disclaimer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F2240;strokeColor=#0F2240;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="415" width="220" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="ep1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="20" target="21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ep2" value="Valid Tensor" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="21" target="22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ep3" value="Normalized [3,224,224]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="22" target="23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ep4" value="Target Score y^c" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="23" target="24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ep5" value="Neuron Weights" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="24" target="25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ep6" value="Blended Overlay" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="25" target="26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ep7" value="Prob (0.94)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="23" target="26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

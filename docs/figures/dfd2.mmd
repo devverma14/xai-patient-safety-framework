@@ -1,0 +1,27 @@
+flowchart TD
+    TensorIn["Normalized Tensor [3, 224, 224]"]
+    
+    subgraph Subsystem3["3.0 Deep Learning Inference Engine"]
+        P31["3.1 Convolutional Feature Extraction (DenseNet-121 / EfficientNet-B0)"]
+        P32["3.2 Global Average Pooling & Linear Classification Layer"]
+        P33["3.3 Sigmoid Activation & Risk Threshold Comparison"]
+    end
+
+    subgraph Subsystem4["4.0 Grad-CAM Explainability Engine"]
+        P41["4.1 Backward Autograd Hook on Target Conv Layer"]
+        P42["4.2 Global Average Pooling of Gradients (Weights alpha_k)"]
+        P43["4.3 Linear Combination of Feature Maps & ReLU Thresholding"]
+        P44["4.4 Bilinear Interpolation (224x224) & JET Thermal Color Mapping"]
+    end
+
+    TensorIn --> P31
+    P31 -->|"Feature Maps A^k"| P32
+    P31 -.->|"Forward Cache A^k"| P43
+    P32 -->|"Target Class Score y^c"| P33
+    P32 -->|"Target Score y^c"| P41
+    P41 -->|"Gradients d y^c / d A^k"| P42
+    P42 -->|"Weights alpha_k"| P43
+    P43 -->|"Coarse Saliency Map L_GradCAM"| P44
+    
+    P33 --> Out_Prob["Calibrated Class Probability & Triage Label"]
+    P44 --> Out_Heatmap["Color-Mapped Heatmap Overlay (224x224x3)"]

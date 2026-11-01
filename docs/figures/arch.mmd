@@ -1,0 +1,45 @@
+graph TD
+    subgraph ClientTier["1. Presentation Tier (Next.js 14 / TypeScript)"]
+        UI_Nav["Modality Selector & Auto-Scroll Router"]
+        UI_Upload["Multi-Format Document & Medical Scan Ingestion"]
+        UI_Viewer["Canvas-Based Grad-CAM Alpha Blend Slider (0-100%)"]
+        UI_Findings["Structured Lab Parameter & Reference Range View"]
+    end
+
+    subgraph APITier["2. API Gateway & Defensive Validation (FastAPI)"]
+        API_Route["Asynchronous REST Endpoints (/api/v1/predict/*)"]
+        Gate_Dim["Dimension & Aspect Ratio Filter (>=100px, <=5:1)"]
+        Gate_Var["Canvas Variance & Blur Filter (std>=5.0, var>=10.0)"]
+        Privacy["Stateless Memory Buffer (Zero Patient Storage Policy)"]
+    end
+
+    subgraph InferenceTier["3. Predictive Inference & Parsing Engines"]
+        Lab_OCR["Tesseract OCR & Regex Biomarker Parser"]
+        CNN_Pneu["DenseNet-121: Pediatric CXR Pneumonia (t=0.50)"]
+        CNN_TB["Multi-Site DenseNet-121: CXR Tuberculosis (t=0.50)"]
+        CNN_Skin["DenseNet-121: HAM10000 Binary Triage (t=0.40)"]
+        CNN_Retina["EfficientNet-B0: APTOS Retinal Fundus (t=0.50)"]
+    end
+
+    subgraph ExplainabilityTier["4. Explainability (XAI) & Safety Guardrails"]
+        GradCAM["Grad-CAM Saliency Engine (Autograd Backward Hooks + ReLU)"]
+        RefIntervals["Deterministic Clinical Physiological Reference Intervals"]
+        ColorMap["OpenCV Thermal JET Colormapping & Canvas Alpha Blending"]
+        Disclaimer["Mandatory Biological Misattribution Clinical Disclaimer"]
+    end
+
+    UI_Upload --> API_Route
+    API_Route --> Gate_Dim --> Gate_Var --> Privacy
+    Privacy --> Lab_OCR
+    Privacy --> CNN_Pneu
+    Privacy --> CNN_TB
+    Privacy --> CNN_Skin
+    Privacy --> CNN_Retina
+
+    Lab_OCR --> RefIntervals --> UI_Findings
+    CNN_Pneu --> GradCAM
+    CNN_TB --> GradCAM
+    CNN_Skin --> GradCAM
+    CNN_Retina --> GradCAM
+
+    GradCAM --> ColorMap --> Disclaimer --> UI_Viewer

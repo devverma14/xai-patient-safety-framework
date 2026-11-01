@@ -1,0 +1,109 @@
+{
+  "model_name": "APTOS 2019 Retina Binary DR Classification Model",
+  "selected_architecture": "efficientnet_b0",
+  "model_sha256": "4bf9260be9393f440d2a201dc763edb2eab52ab57c1f2d7c6780deddd1ac7a07",
+  "task": "Binary Diabetic Retinopathy Classification",
+  "task_description": "Classifies retinal fundus images into No Diabetic Retinopathy (Grade 0) vs Diabetic Retinopathy Present (Grades 1-4). Decision-support / research prototype.",
+  "input_resolution": "224x224",
+  "input_channels": 3,
+  "normalization": {
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ]
+  },
+  "target_mapping": {
+    "0": "No Diabetic Retinopathy (Grade 0)",
+    "1": "Diabetic Retinopathy Present (Grades 1, 2, 3, 4)"
+  },
+  "training_configuration": {
+    "optimizer": "AdamW",
+    "learning_rate": 0.0001,
+    "batch_size": 32,
+    "epochs": 5,
+    "random_seed": 42,
+    "loss_function": "nn.CrossEntropyLoss (unweighted)"
+  },
+  "split_summary": {
+    "strategy": "Duplicate-hash isolated 5-grade stratified split",
+    "ratios": "70% train / 15% validation / 15% test",
+    "train_samples": 2566,
+    "val_samples": 549,
+    "test_samples": 547,
+    "cross_partition_duplicate_hash_overlap": 0
+  },
+  "patient_grouping_limitation": "APTOS metadata contains only id_code and diagnosis. It does NOT contain patient_id or eye_id. Patient-level grouping cannot be enforced; duplicate images were isolated by SHA-256 hash.",
+  "validation_performance": {
+    "roc_auc": 0.9995,
+    "pr_auc": 0.9995,
+    "dr_sensitivity": 0.9784,
+    "sensitivity": 0.9784,
+    "specificity": 0.9889,
+    "f1_score": 0.9837,
+    "f1": 0.9837,
+    "balanced_accuracy": 0.9837,
+    "accuracy": 0.9836,
+    "precision": 0.9891,
+    "confusion_matrix": {
+      "tp": 272,
+      "tn": 268,
+      "fp": 3,
+      "fn": 6,
+      "matrix": [
+        [
+          268,
+          3
+        ],
+        [
+          6,
+          272
+        ]
+      ]
+    },
+    "clinical_safety_summary": {
+      "sensitivity_dr_present": "97.84%",
+      "specificity_no_dr": "98.89%"
+    },
+    "loss": 0.0349
+  },
+  "test_performance": {
+    "roc_auc": 0.9958,
+    "pr_auc": 0.9958,
+    "dr_sensitivity": 0.9855,
+    "sensitivity": 0.9855,
+    "specificity": 0.9742,
+    "f1_score": 0.9802,
+    "f1": 0.9802,
+    "balanced_accuracy": 0.9798,
+    "accuracy": 0.9799,
+    "precision": 0.9749,
+    "confusion_matrix": {
+      "tp": 272,
+      "tn": 264,
+      "fp": 7,
+      "fn": 4,
+      "matrix": [
+        [
+          264,
+          7
+        ],
+        [
+          4,
+          272
+        ]
+      ]
+    },
+    "clinical_safety_summary": {
+      "sensitivity_dr_present": "98.55%",
+      "specificity_no_dr": "97.42%"
+    },
+    "loss": 0.0812
+  },
+  "created_at": "2026-10-05 02:36:14"
+}

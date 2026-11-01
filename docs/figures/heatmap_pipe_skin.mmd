@@ -1,0 +1,8 @@
+flowchart LR
+    S_Raw["Dermoscopy Image (224x224)\nPigmented Skin Lesion"] --> S_Model["DenseNet-121 Forward Pass\nP(Higher-Risk) = 0.8420"]
+    S_Model --> S_Conv["Target Layer: denseblock4.denselayer16.conv2"]
+    S_Conv --> S_Grad["Backpropagation from Higher-Risk Class Logit"]
+    S_Grad --> S_GAP["Gradient Feature Map Averaging (Weights alpha_k)"]
+    S_GAP --> S_ReLU["Positive Linear Combination via ReLU"]
+    S_ReLU --> S_Jet["Upsampling to 224x224 & Thermal Palette Mapping"]
+    S_Jet --> S_Out["Alpha-Blended Overlay\n(Attention Focused on Asymmetric Pigment Network)"]

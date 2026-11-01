@@ -1,0 +1,68 @@
+{
+  "audit_timestamp": "2026-11-01T01:45:00Z",
+  "evaluator": "Antigravity Audit Engine",
+  "project": "Development of Framework Using Explainable Artificial Intelligence for Patient Safety",
+  "models_audited": {
+    "pneumonia": {
+      "architecture": "DenseNet-121",
+      "checkpoint": "models/pneumonia/best_pneumonia_model.pt",
+      "target_layer": "features.denseblock4.denselayer16.conv2",
+      "threshold": 0.5,
+      "dataset": "Kermany Chest X-Ray",
+      "test_samples": 910,
+      "auroc": 0.9621330845771146,
+      "accuracy": 0.9065934065934066,
+      "sensitivity": 0.9014925373134328,
+      "specificity": 0.9208333333333333
+    },
+    "tb": {
+      "architecture": "DenseNet-121",
+      "checkpoint": "models/tb/best_tb_model.pt",
+      "target_layer": "features.denseblock4.denselayer16.conv2",
+      "threshold": 0.5,
+      "dataset": "Shenzhen + Montgomery",
+      "test_samples": 120,
+      "auroc": 0.9227563212003335,
+      "accuracy": 0.8583333333333333,
+      "sensitivity": 0.8135593220338984,
+      "specificity": 0.9016393442622951
+    },
+    "skin": {
+      "architecture": "DenseNet-121",
+      "checkpoint": "models/skin/binary/best_skin_binary_model.pt",
+      "target_layer": "features.denseblock4.denselayer16.conv2",
+      "threshold_deployed": 0.4,
+      "threshold_standard": 0.5,
+      "threshold_selection": "Validation set sensitivity constraint >= 0.80 and balanced accuracy maximization",
+      "dataset": "HAM10000",
+      "test_samples": 1486,
+      "auroc": 0.8806454598931599,
+      "accuracy_040": 0.6837146702557201,
+      "sensitivity_040": 0.9494584837545126,
+      "specificity_040": 0.6228287841191067
+    },
+    "retina": {
+      "architecture": "EfficientNet-B0",
+      "checkpoint": "models/retina/best_retina_model.pt",
+      "target_layer": "features.8.0",
+      "threshold": 0.5,
+      "dataset": "APTOS 2019 Blindness Detection",
+      "test_samples": 547,
+      "auroc": 0.9957885448419701,
+      "accuracy": 0.979890310786106,
+      "sensitivity": 0.9855072463768116,
+      "specificity": 0.974169741697417
+    },
+    "lab": {
+      "method": "OCR + Regex Extraction + Physiological Reference Intervals",
+      "evaluated_fixtures": 8,
+      "evaluated_parameters": 44,
+      "test_name_accuracy": 1.0,
+      "numeric_match_rate": 1.0,
+      "unit_accuracy": 1.0,
+      "reference_range_accuracy": 1.0,
+      "interpretation_accuracy": 1.0,
+      "imputation_policy": "Strict zero/median imputation prohibition"
+    }
+  }
+}

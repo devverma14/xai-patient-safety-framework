@@ -1,0 +1,19 @@
+flowchart TD
+    subgraph MatrixGrid["Empirical Evaluation Matrix (N = 1,486 Held-Out Tests at Threshold t = 0.40)"]
+        direction TB
+        subgraph Row1["Actual Higher-Risk Malignant Cases (N_pos = 277)"]
+            TP["True Positives (TP): 254 cases\nCorrectly Flagged for Biopsy Referral\nSensitivity (Recall) = 91.70%"]
+            FN["False Negatives (FN): 23 cases\nMissed Malignancies (Reduced from 43 at t=0.50)\nFalse Negative Rate = 8.30%"]
+        end
+        subgraph Row2["Actual Lower-Risk Benign Cases (N_neg = 1,209)"]
+            FP["False Positives (FP): 359 cases\nReferred for Non-Invasive Dermatoscopy\nFalse Positive Rate = 29.69%"]
+            TN["True Negatives (TN): 850 cases\nCorrectly Classified for Routine Monitoring\nSpecificity = 70.31%"]
+        end
+    end
+
+    subgraph MetricsSummary["Derived Clinical Performance Metrics"]
+        M1["Overall Accuracy: 74.29% (1,104 / 1,486)"]
+        M2["Precision (PPV): 41.44% (254 / 613 referred cases)"]
+        M3["Balanced Accuracy: 81.00% | F1-Score: 0.5708"]
+        M4["Clinical Conclusion: High sensitivity satisfies safety triage criteria; low PPV precludes autonomous use."]
+    end

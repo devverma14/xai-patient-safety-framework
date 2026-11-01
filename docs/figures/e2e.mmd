@@ -1,0 +1,29 @@
+flowchart TD
+    Start(["Clinician Ingests File"]) --> CheckType{"Input File Type?"}
+    
+    CheckType -->|"Lab Report (PDF/PNG)"| RunOCR["Tesseract OCR Text Extraction"]
+    RunOCR --> RegexParse["Regex Biomarker & Numerical Value Parser"]
+    RegexParse --> MatchIntervals["Evaluate Extracted Values Against Reference Intervals"]
+    MatchIntervals --> LabOutput["Display Out-of-Range Indicators (High/Low) & Educational Guidance"]
+    
+    CheckType -->|"Medical Image (CXR / Skin / Fundus)"| QualityGate{"Defensive Quality Gate"}
+    QualityGate -->|"Fails Resolution / Blur / Solid Canvas"| RejectHTTP["Return HTTP 400 Bad Request with Specific Error Code"]
+    
+    QualityGate -->|"Passed"| Preproc["Image Standardization (Resize 224x224, ImageNet Normalization)"]
+    Preproc --> ForwardPass["Model Forward Inference (DenseNet-121 / EfficientNet-B0)"]
+    ForwardPass --> CheckThreshold{"Predicted Probability >= Threshold?"}
+    
+    CheckThreshold -->|"Yes"| FlagPositive["Flag Condition Positive / Higher-Risk Triage"]
+    CheckThreshold -->|"No"| FlagNegative["Flag Condition Negative / Lower-Risk Routine"]
+    
+    ForwardPass --> HookGradients["Compute Backward Gradients at Target Convolutional Layer"]
+    HookGradients --> PoolWeights["Global Average Pooling of Gradients (Channel Weights alpha_k)"]
+    PoolWeights --> ApplyReLU["Weighted Combination & ReLU Activation"]
+    ApplyReLU --> UpsampleJet["Bilinear Upsampling (224x224) & JET Thermal Colormapping"]
+    UpsampleJet --> AlphaBlend["Direct Canvas Alpha Blending (Adjustable 0% to 100%)"]
+    
+    FlagPositive --> UnifiedView["Present Predicted Class, Confidence Score, Heatmap & Misattribution Disclaimer"]
+    FlagNegative --> UnifiedView
+    AlphaBlend --> UnifiedView
+    LabOutput --> Complete(["Clinician Review & Final Clinical Decision"])
+    UnifiedView --> Complete

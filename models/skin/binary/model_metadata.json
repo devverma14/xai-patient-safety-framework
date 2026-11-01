@@ -1,0 +1,107 @@
+{
+  "model_name": "HAM10000 AI-Assisted Binary Skin Lesion Classifier",
+  "architecture": "densenet121",
+  "selected_experiment": "Experiment B \u2014 Class-Weighted Cross-Entropy",
+  "num_classes": 2,
+  "classes": [
+    "BENIGN",
+    "MALIGNANT"
+  ],
+  "class_mapping": {
+    "MALIGNANT": [
+      "mel",
+      "bcc",
+      "akiec"
+    ],
+    "BENIGN": [
+      "nv",
+      "bkl",
+      "vasc",
+      "df"
+    ]
+  },
+  "input_size": [
+    224,
+    224
+  ],
+  "normalization": {
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ]
+  },
+  "device": "cuda",
+  "split_strategy": "lesion_id grouped split (70/15/15, seed=42)",
+  "val_metrics": {
+    "loss": 0.5110100350881878,
+    "accuracy": 0.7144736842105263,
+    "macro_f1": 0.6735802263879075,
+    "weighted_f1": 0.7406211739707137,
+    "balanced_accuracy": 0.7675187082864593,
+    "roc_auc": 0.8449646193480354,
+    "pr_auc": 0.5408986867643464,
+    "sensitivity": 0.8589341692789969,
+    "specificity": 0.6761032472939217,
+    "benign_precision": 0.9474912485414235,
+    "benign_recall": 0.6761032472939217,
+    "benign_f1": 0.7891156462585034,
+    "malignant_precision": 0.4132730015082956,
+    "malignant_recall": 0.8589341692789969,
+    "malignant_f1": 0.5580448065173116,
+    "confusion_matrix": [
+      [
+        812,
+        389
+      ],
+      [
+        45,
+        274
+      ]
+    ]
+  },
+  "test_metrics": {
+    "loss": 0.505362560017433,
+    "accuracy": 0.7429340511440108,
+    "macro_f1": 0.6936545456507895,
+    "weighted_f1": 0.7707157857844845,
+    "balanced_accuracy": 0.810013944752503,
+    "roc_auc": 0.8806454598931599,
+    "pr_auc": 0.5975366795959056,
+    "sensitivity": 0.9169675090252708,
+    "specificity": 0.7030603804797353,
+    "benign_precision": 0.9736540664375716,
+    "benign_recall": 0.7030603804797353,
+    "benign_f1": 0.8165225744476465,
+    "malignant_precision": 0.41435562805872755,
+    "malignant_recall": 0.9169675090252708,
+    "malignant_f1": 0.5707865168539326,
+    "confusion_matrix": [
+      [
+        850,
+        359
+      ],
+      [
+        23,
+        254
+      ]
+    ]
+  },
+  "feasibility": {
+    "malignant_sensitivity_ge_0_80": true,
+    "specificity_ge_0_80": false,
+    "balanced_acc_ge_0_80": true,
+    "roc_auc_ge_0_85": true,
+    "malignant_precision_ge_0_50": false,
+    "accuracy_ge_0_80": false,
+    "passed_count": 3,
+    "total_criteria": 6,
+    "overall_feasible_binary": false,
+    "outcome_category": "2. Binary skin fallback demonstrates moderate AI-assisted feasibility"
+  }
+}

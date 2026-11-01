@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-10-29T00:00:00.000Z" agent="Antigravity IDE - Academic Submission" version="21.0.0" type="device">
+  <diagram id="DFD_Level_1" name="DFD Level 1 Decomposed">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="300" value="Clinician
+[External Entity]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#1E293B;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="40" y="200" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="301" value="1.0
+Defensive Input
+Quality Gate" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DC2626;strokeColor=#DC2626;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="240" y="80" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="302" value="2.0
+Tensor Preprocessing
+&amp;amp; Standardization" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#1E293B;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="460" y="80" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="303" value="3.0
+Deep Learning
+Inference Engine" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#059669;strokeColor=#059669;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="460" y="200" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="304" value="4.0
+Grad-CAM
+Explainability Engine" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D97706;strokeColor=#D97706;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="460" y="320" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="305" value="5.0
+Presentation &amp;
+Opacity Blending" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F2240;strokeColor=#0F2240;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="240" y="320" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="306" value="D1: Model Checkpoints &amp;amp; Reference Rules
+[Data Store]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;fontColor=#92400E;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="680" y="200" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ed1_1" value="Upload File" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="300" target="301">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed1_2" value="Valid Image" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="301" target="302">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed1_3" value="Input Tensor" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="302" target="303">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed1_4" value="Class Score y^c" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="303" target="304">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed1_5" value="Saliency Map" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="304" target="305">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed1_6" value="Probability" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="303" target="305">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed1_7" value="Blended Result" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="305" target="300">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed1_8" value="Weights / Rules" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="306" target="303">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

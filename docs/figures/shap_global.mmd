@@ -1,0 +1,18 @@
+flowchart LR
+    subgraph GlobalSHAP["Mean Absolute SHAP Values on Held-Out Test Set (N = 15,073 Encounters)"]
+        direction TB
+        F1["1. Number of Prior Inpatient Visits: |SHAP| = 0.421 (Primary Driver of Risk)"]
+        F2["2. Discharge Disposition ID: |SHAP| = 0.384 (Discharged to Skilled Nursing Facility)"]
+        F3["3. Number of Secondary Diagnoses: |SHAP| = 0.312 (Higher Comorbidity Burden)"]
+        F4["4. Time in Hospital / Length of Stay: |SHAP| = 0.285 (Longer Stays Correlate with Acuity)"]
+        F5["5. Number of Prescribed Medications: |SHAP| = 0.248 (Polypharmacy Indicator)"]
+        F6["6. Admission Type ID: |SHAP| = 0.201 (Emergency vs. Elective Admission)"]
+        F7["7. Number of Emergency Visits (Past Year): |SHAP| = 0.176 (Care Instability)"]
+        F8["8. Prior Outpatient Encounters: |SHAP| = 0.142 (Routine Monitoring Frequency)"]
+    end
+
+    subgraph Interpretability["Clinical Explanation Insights"]
+        I1["Features act additively in log-odds margin space: f(x) = phi_0 + sum(phi_i)"]
+        I2["Top-5 feature removal drops risk probability by delta = 0.0929 (Verified Faithfulness)"]
+        I3["Gaussian noise (sigma = 0.01) retains Spearman r_s = 0.9188 ranking stability"]
+    end

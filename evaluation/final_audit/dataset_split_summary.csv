@@ -1,0 +1,5 @@
+modality,task,dataset_name,total_samples,unique_patients,train_samples,val_samples,test_samples,split_unit,patient_overlap,leakage_audit_status
+Chest X-Ray,Pneumonia Detection,Kermany Chest X-Ray,5856,3118,4058,888,910,Patient ID,0,VERIFIED_ZERO_LEAKAGE
+Chest X-Ray,Tuberculosis Screening,Shenzhen (662) + Montgomery (138),800,800,560,120,120,Site-Stratified Patient ID,0,VERIFIED_ZERO_LEAKAGE
+Dermoscopy,Skin Lesion Binary Triage,HAM10000,10015,7470,7015,1514,1486,lesion_id,0,VERIFIED_ZERO_LEAKAGE
+Retinal Fundus,Diabetic Retinopathy Detection,APTOS 2019 Blindness Detection,3662,N/A (Metadata lacks patient_id),2566,549,547,SHA-256 Duplicate-Hash Isolated Stratified,Zero hash duplicate overlap (patient_id limitation documented),VERIFIED_ZERO_HASH_OVERLAP

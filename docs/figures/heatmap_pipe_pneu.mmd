@@ -1,0 +1,8 @@
+flowchart LR
+    P_Raw["Original PA Radiograph (224x224)\nPediatric Chest Image"] --> P_Model["DenseNet-121 Forward Pass\nP(Pneumonia) = 0.9412"]
+    P_Model --> P_Conv["Target Layer Activation: denseblock4.denselayer16.conv2"]
+    P_Conv --> P_Grad["Gradients Backpropagated from Target Logit"]
+    P_Grad --> P_GAP["Global Average Pooling across 7x7 Feature Map"]
+    P_GAP --> P_ReLU["ReLU Linear Combination: Filters Negative Activations"]
+    P_ReLU --> P_Jet["Upsampling to 224x224 & JET Thermal Color Palette"]
+    P_Jet --> P_Out["Alpha-Blended Saliency Overlay\n(Highlights Lobar Consolidation in Lung Parenchyma)"]

@@ -1,0 +1,10 @@
+flowchart TD
+    CXR["Chest Radiograph (Shenzhen / Montgomery Cohort)"] --> Gate["Defensive Input Quality Inspection"]
+    Gate -->|"Passed"| Preproc["Image Preprocessing (224x224 Tensor & Standardization)"]
+    Preproc --> Model["Multi-Site Adapted DenseNet-121 (Checkpoint V23_E04)\nEvaluated Across Distinct Scanner Hardware"]
+    Model --> Thresh["Decision Boundary (Threshold t = 0.50)\nNormal vs. Active Tuberculosis (ROC-AUC = 0.9230, Sensitivity = 81.36%)"]
+    
+    Model --> Hook["Apical Saliency Localization\nBackward Autograd on Final Dense Block Conv Layer"]
+    Hook --> Saliency["Highlights Apical Infiltrates & Cavitations (JET Colormap)"]
+    Thresh --> Output["Triage Presentation, Interactive Blend Slider & Second-Reader Safeguard"]
+    Saliency --> Output

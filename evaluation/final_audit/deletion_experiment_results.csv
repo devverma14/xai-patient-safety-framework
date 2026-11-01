@@ -1,0 +1,21 @@
+modality,task,sample_identifier,file_name,true_label_idx,true_label_name,target_layer,original_score,masked_score,absolute_score_change,relative_score_change_percent,salient_pixel_mask_ratio,comparison_artifact
+Pneumonia,Pneumonia Detection,pneumonia_pos_01,person1947_bacteria_4876.jpeg,1,PNEUMONIA,Conv2d,0.736134,0.53179,0.204344,27.76,0.2,pneumonia_pneumonia_pos_01_comparison.png
+Pneumonia,Pneumonia Detection,pneumonia_pos_02,person1951_bacteria_4882.jpeg,1,PNEUMONIA,Conv2d,0.845983,0.823693,0.02229,2.63,0.2,pneumonia_pneumonia_pos_02_comparison.png
+Pneumonia,Pneumonia Detection,pneumonia_pos_03,person1003_bacteria_2934.jpeg,1,PNEUMONIA,Conv2d,0.900555,0.779826,0.120729,13.41,0.2,pneumonia_pneumonia_pos_03_comparison.png
+Pneumonia,Pneumonia Detection,pneumonia_pos_04,person1003_virus_1685.jpeg,1,PNEUMONIA,Conv2d,0.803997,0.652329,0.151668,18.86,0.2,pneumonia_pneumonia_pos_04_comparison.png
+Pneumonia,Pneumonia Detection,pneumonia_pos_05,person1007_bacteria_2938.jpeg,1,PNEUMONIA,Conv2d,0.856022,0.781851,0.07417,8.66,0.2,pneumonia_pneumonia_pos_05_comparison.png
+Tuberculosis,TB Screening,tb_pos_01,MCUCXR_0104_1.png,1,Tuberculosis,Conv2d,0.785331,0.15026,0.635071,80.87,0.2,tuberculosis_tb_pos_01_comparison.png
+Tuberculosis,TB Screening,tb_pos_02,MCUCXR_0141_1.png,1,Tuberculosis,Conv2d,0.518403,0.267883,0.25052,48.33,0.2,tuberculosis_tb_pos_02_comparison.png
+Tuberculosis,TB Screening,tb_pos_03,MCUCXR_0144_1.png,1,Tuberculosis,Conv2d,0.823163,0.240778,0.582385,70.75,0.2,tuberculosis_tb_pos_03_comparison.png
+Tuberculosis,TB Screening,tb_pos_04,MCUCXR_0182_1.png,1,Tuberculosis,Conv2d,0.294702,0.22148,0.073222,24.85,0.2,tuberculosis_tb_pos_04_comparison.png
+Tuberculosis,TB Screening,tb_pos_05,MCUCXR_0243_1.png,1,Tuberculosis,Conv2d,0.406897,0.074308,0.332588,81.74,0.2,tuberculosis_tb_pos_05_comparison.png
+Skin_Lesion,Binary Triage,skin_pos_01,ISIC_0030417.jpg,1,MALIGNANT,Conv2d,0.764161,0.539879,0.224282,29.35,0.2,skin_lesion_skin_pos_01_comparison.png
+Skin_Lesion,Binary Triage,skin_pos_02,ISIC_0029081.jpg,1,MALIGNANT,Conv2d,0.565283,0.282521,0.282762,50.02,0.2,skin_lesion_skin_pos_02_comparison.png
+Skin_Lesion,Binary Triage,skin_pos_03,ISIC_0025744.jpg,1,MALIGNANT,Conv2d,0.66557,0.370006,0.295565,44.41,0.2,skin_lesion_skin_pos_03_comparison.png
+Skin_Lesion,Binary Triage,skin_pos_04,ISIC_0031953.jpg,1,MALIGNANT,Conv2d,0.359533,0.114118,0.245414,68.26,0.2,skin_lesion_skin_pos_04_comparison.png
+Skin_Lesion,Binary Triage,skin_pos_05,ISIC_0031406.jpg,1,MALIGNANT,Conv2d,0.307924,0.132994,0.17493,56.81,0.2,skin_lesion_skin_pos_05_comparison.png
+Retina_DR,DR Detection,retina_pos_01,001639a390f0.png,1,DR Present,Conv2d,0.999425,0.989312,0.010113,1.01,0.2,retina_dr_retina_pos_01_comparison.png
+Retina_DR,DR Detection,retina_pos_02,0083ee8054ee.png,1,DR Present,Conv2d,0.998396,0.939609,0.058787,5.89,0.2,retina_dr_retina_pos_02_comparison.png
+Retina_DR,DR Detection,retina_pos_03,00b74780d31d.png,1,DR Present,Conv2d,0.998378,0.366031,0.632348,63.34,0.2,retina_dr_retina_pos_03_comparison.png
+Retina_DR,DR Detection,retina_pos_04,0124dffecf29.png,1,DR Present,Conv2d,0.586444,0.328178,0.258266,44.04,0.2,retina_dr_retina_pos_04_comparison.png
+Retina_DR,DR Detection,retina_pos_05,0180bfa26c0b.png,1,DR Present,Conv2d,0.999834,0.72287,0.276964,27.7,0.2,retina_dr_retina_pos_05_comparison.png

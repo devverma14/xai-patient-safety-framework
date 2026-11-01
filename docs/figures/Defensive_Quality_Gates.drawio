@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-10-29T00:00:00.000Z" agent="Antigravity IDE - Academic Submission" version="21.0.0" type="device">
+  <diagram id="Defensive_Quality_Gates" name="Defensive Quality Gate Rejection Engine">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="400" value="Incoming Medical Image Stream" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F2240;strokeColor=#0F2240;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="40" width="220" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="401" value="Check 1: File Format &amp;amp; Decode
+Pillow / OpenCV RGB decoding" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#1E293B;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="115" width="220" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="402" value="Check 2: Minimum Resolution
+w &amp;gt;= 100px AND h &amp;gt;= 100px" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#1E293B;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="195" width="220" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="403" value="Check 3: Aspect Ratio Filter
+max(w/h, h/w) &amp;lt;= 5.0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#1E293B;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="275" width="220" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="404" value="Check 4: Canvas Variance
+Grayscale std_dev &amp;gt;= 5.0 (Rejects solid/blank frames)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#1E293B;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="355" width="220" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="405" value="Check 5: Focus Blur Filter
+Laplacian variance &amp;gt;= 10.0 (Rejects severe motion blur)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#1E293B;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="435" width="220" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="406" value="Automated Rejection Response
+HTTP 400 Bad Request with Clinical Error Message
+Inference Blocked; Safe Error Logged" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DC2626;strokeColor=#DC2626;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="340" y="275" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="407" value="Input Approved -&amp;gt; Routed to PyTorch Inference Engine" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#059669;strokeColor=#059669;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="515" width="220" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="edf_1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="400" target="401">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edf_2" value="Passed" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="401" target="402">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edf_3" value="Passed" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="402" target="403">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edf_4" value="Passed" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="403" target="404">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edf_5" value="Passed" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="404" target="405">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edf_6" value="Passed" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="405" target="407">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edf_fail1" value="Fail" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#DC2626;strokeWidth=2;fontSize=10;fontColor=#DC2626;dashed=1;" edge="1" parent="1" source="401" target="406">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edf_fail2" value="Fail" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#DC2626;strokeWidth=2;fontSize=10;fontColor=#DC2626;dashed=1;" edge="1" parent="1" source="402" target="406">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edf_fail3" value="Fail" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#DC2626;strokeWidth=2;fontSize=10;fontColor=#DC2626;dashed=1;" edge="1" parent="1" source="403" target="406">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edf_fail4" value="Fail" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#DC2626;strokeWidth=2;fontSize=10;fontColor=#DC2626;dashed=1;" edge="1" parent="1" source="404" target="406">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edf_fail5" value="Fail" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#DC2626;strokeWidth=2;fontSize=10;fontColor=#DC2626;dashed=1;" edge="1" parent="1" source="405" target="406">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

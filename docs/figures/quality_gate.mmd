@@ -1,0 +1,23 @@
+flowchart TD
+    In(["Incoming Medical Image Buffer"]) --> C1{"Check 1: File Format & Decodable?"}
+    
+    C1 -->|"Invalid Bytes / Corrupted"| Rej1["HTTP 400: Unreadable or Corrupt File Stream"]
+    C1 -->|"Valid RGB Array"| C2{"Check 2: Minimum Dimensions\nw >= 100px AND h >= 100px?"}
+    
+    C2 -->|"Sub-Resolution Thumbnail"| Rej2["HTTP 400: Image Resolution Too Low for Reliable Evaluation"]
+    C2 -->|"Passed"| C3{"Check 3: Aspect Ratio Filter\nmax(w/h, h/w) <= 5.0?"}
+    
+    C3 -->|"Extreme Aspect Ratio Banner"| Rej3["HTTP 400: Extreme Aspect Ratio Rejected to Avoid Distortion"]
+    C3 -->|"Passed"| C4{"Check 4: Canvas Variance Filter\nGrayscale std_dev >= 5.0?"}
+    
+    C4 -->|"Solid / Blank Canvas"| Rej4["HTTP 400: Blank or Low-Contrast Image Detected"]
+    C4 -->|"Passed"| C5{"Check 5: Laplacian Blur Filter\nVar(Laplacian) >= 10.0?"}
+    
+    C5 -->|"Severe Motion / Defocus Blur"| Rej5["HTTP 400: Severe Blur Detected; Image Unusable"]
+    C5 -->|"Passed"| Approve(["Input Approved -> Forwarded to Preprocessor & Inference Engine"])
+    
+    Rej1 --> Fail(["Halt Execution & Log Rejection Reason"])
+    Rej2 --> Fail
+    Rej3 --> Fail
+    Rej4 --> Fail
+    Rej5 --> Fail

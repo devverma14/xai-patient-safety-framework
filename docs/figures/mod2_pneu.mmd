@@ -1,0 +1,10 @@
+flowchart TD
+    CXR["Pediatric Frontal Chest Radiograph (PNG / JPEG)"] --> Gate["Defensive Quality Gate (Resolution, Variance, Blur)"]
+    Gate -->|"Passed"| Preproc["Image Standardization (Resize 224x224, ImageNet Normalization)"]
+    Preproc --> DenseNet["DenseNet-121 Forward Pass\n(4 DenseBlocks, Global Avg Pooling, Sigmoid Logit)"]
+    DenseNet --> Classify["Class Decision (Threshold t = 0.50)\nNormal vs. Pneumonia (ROC-AUC = 0.9621, Sensitivity = 90.15%)"]
+    
+    DenseNet --> GradCAM["Grad-CAM Saliency Engine\nTarget Layer: features.denseblock4.denselayer16.conv2"]
+    GradCAM --> Heatmap["Upsampled JET Thermal Overlay & Canvas Blend Slider (0% - 100%)"]
+    Classify --> Presentation["Clinical Results Display & Biological Misattribution Disclaimer"]
+    Heatmap --> Presentation

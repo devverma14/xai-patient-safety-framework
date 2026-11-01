@@ -1,0 +1,36 @@
+sequenceDiagram
+    autonumber
+    actor Clinician
+    participant UI as Next.js Web Frontend
+    participant API as FastAPI REST Gateway
+    participant Gate as Defensive Quality Gate
+    participant Model as PyTorch Inference Engine
+    participant XAI as Grad-CAM Saliency Engine
+
+    Clinician->>UI: Selects modality and uploads medical scan
+    UI->>API: POST /api/v1/predict/{modality} (multipart/form-data)
+    activate API
+    API->>Gate: validate_image(image_bytes)
+    activate Gate
+    alt Image fails quality checks (dimensions, blur, solid frame)
+        Gate-->>API: ValidationError (e.g., standard deviation < 5.0)
+        API-->>UI: HTTP 400 Bad Request (Detailed Clinical Reason)
+        UI-->>Clinician: Display quality rejection alert & prompt re-upload
+    else Image passes all quality checks
+        Gate-->>API: Validated PIL Image
+        deactivate Gate
+        API->>Model: predict(standardized_tensor)
+        activate Model
+        Model->>Model: Forward pass through DenseNet-121 / EfficientNet-B0
+        Model-->>API: Class probability & calibrated binary triage label
+        API->>XAI: generate_explanation(model, layer, target_class)
+        activate XAI
+        XAI->>XAI: Backward pass, gradient pooling, ReLU, and JET colormap
+        XAI-->>API: 224x224 RGB Heatmap Matrix & Saliency Metadata
+        deactivate XAI
+        deactivate Model
+        API-->>UI: HTTP 200 OK (JSON payload: prediction, explanation, disclaimer)
+        deactivate API
+        UI->>UI: Render side-by-side view with interactive blend slider
+        UI-->>Clinician: Display calibrated diagnostic result & visual explanation
+    end

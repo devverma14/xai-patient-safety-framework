@@ -1,0 +1,19 @@
+flowchart TD
+    subgraph ExpA["(A) Discrimination Performance Across Evaluated Vision Modalities (ROC-AUC)"]
+        A1["Pediatric Pneumonia (DenseNet-121, N=910): ROC-AUC = 0.9621 | Sensitivity = 90.15%"]
+        A2["Diabetic Retinopathy (EfficientNet-B0, N=547): ROC-AUC = 0.9958 | Sensitivity = 98.55%"]
+        A3["Pulmonary Tuberculosis (DenseNet-121, N=120): ROC-AUC = 0.9230 | Sensitivity = 81.36%"]
+        A4["Skin Lesion Triage (DenseNet-121, N=1,486): ROC-AUC = 0.8806 | Sensitivity = 91.70% (t=0.40)"]
+    end
+
+    subgraph ExpB["(B) Pediatric Pneumonia Confusion Matrix (N = 910 Held-Out Tests)"]
+        B1["True Positives (TP): 604 cases | False Negatives (FN): 66 cases"]
+        B2["True Negatives (TN): 221 cases | False Positives (FP): 19 cases"]
+        B3["Sensitivity = 90.15% | Specificity = 92.08% | Precision = 96.95% | F1-Score = 0.9343"]
+    end
+
+    subgraph ExpC["(C) Empirical Explanation Faithfulness Audits (Pixel Deletion Test)"]
+        C1["HAM10000 Skin Lesion: Top 20% Pixels Masked -> Confidence Drop delta = -11.62% (p < 0.001)"]
+        C2["APTOS 2019 Diabetic Retinopathy: Top 20% Pixels Masked -> Confidence Drop delta = -13.95% (p < 0.001)"]
+        C3["Pediatric Pneumonia: Top 20% Pixels Masked -> Confidence Drop delta = -11.90% (p < 0.001)"]
+    end

@@ -1,0 +1,9 @@
+document_fixture,format,evaluated_parameters,extraction_method,test_name_accuracy,numeric_exact_match,unit_match_rate,reference_range_accuracy,interpretation_status_accuracy,false_abnormals,missed_abnormals,human_review_flagged,imputation_attempted
+sample_image_report.jpg,JPEG Scan,9,Tesseract OCR,1.0,1.0,1.0,1.0,1.0,0,0,True,False
+sample_missing_unit.png,PNG,2,Tesseract OCR,1.0,1.0,1.0,1.0,1.0,0,0,True,False
+sample_conflicting.png,PNG,1,Tesseract OCR,1.0,1.0,1.0,1.0,1.0,0,0,True,False
+sample_out_of_bounds.png,PNG,2,Tesseract OCR,1.0,1.0,1.0,1.0,1.0,0,0,True,False
+synthetic_comprehensive_panel.pdf,Digital Multi-Page PDF,12,Direct PyPDF,1.0,1.0,1.0,1.0,1.0,0,0,True,False
+synthetic_multicolumn_report.png,Multi-Column PNG,6,Tesseract OCR,1.0,1.0,1.0,1.0,1.0,0,0,True,False
+synthetic_rotated_report.png,Deskewed Rotated PNG,6,Tesseract OCR + Deskew,1.0,1.0,1.0,1.0,1.0,0,0,True,False
+synthetic_side_by_side_panel.png,Side-by-Side Panel PNG,6,Tesseract OCR,1.0,1.0,1.0,1.0,1.0,0,0,True,False

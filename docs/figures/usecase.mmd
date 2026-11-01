@@ -1,0 +1,26 @@
+flowchart LR
+    Clinician["Clinician / Medical Staff"]
+    Auditor["Clinical Safety Auditor"]
+
+    subgraph CDSS_Boundary["Patient Safety CDSS Boundary"]
+        UC1["Upload Diagnostic Image / Lab Report"]
+        UC2["Select Diagnostic Modality"]
+        UC3["Trigger Defensive Quality Inspection"]
+        UC4["View Calibrated Triage Prediction"]
+        UC5["Inspect Grad-CAM Visual Heatmap"]
+        UC6["Adjust Interactive Heatmap Blend Slider"]
+        UC7["Review Deterministic Lab Parameter Ranges"]
+        UC8["Audit Misattribution Disclaimer & Quality Logs"]
+    end
+
+    Clinician --> UC1
+    Clinician --> UC2
+    Clinician --> UC4
+    Clinician --> UC5
+    Clinician --> UC6
+    Clinician --> UC7
+    
+    UC1 -.->|"<<includes>>"| UC3
+    UC4 -.->|"<<includes>>"| UC5
+    
+    Auditor --> UC8

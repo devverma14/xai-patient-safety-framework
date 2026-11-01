@@ -1,0 +1,81 @@
+{
+  "model_type": "PyTorch Transfer Learning CNN",
+  "selected_architecture": "densenet121",
+  "classes": [
+    "NORMAL",
+    "PNEUMONIA"
+  ],
+  "class_to_idx": {
+    "NORMAL": 0,
+    "PNEUMONIA": 1
+  },
+  "num_total_images": 5856,
+  "num_unique_patients": 3118,
+  "train_images": 4058,
+  "train_patients": 2181,
+  "val_images": 888,
+  "val_patients": 467,
+  "test_images": 910,
+  "test_patients": 470,
+  "zero_patient_overlap": true,
+  "class_imbalance_handling": "Cost-sensitive Class Weighted Cross Entropy Loss",
+  "validation_benchmark": {
+    "densenet121": {
+      "loss": 0.3859011375152313,
+      "accuracy": 0.8885135135135135,
+      "precision": 0.9650582362728786,
+      "recall_sensitivity": 0.8814589665653495,
+      "specificity": 0.908695652173913,
+      "f1_score": 0.9213661636219221,
+      "roc_auc": 0.9538390379278446,
+      "pr_auc": 0.9820945568529735,
+      "tn": 209,
+      "fp": 21,
+      "fn": 78,
+      "tp": 580
+    },
+    "efficientnet_b0": {
+      "loss": 0.5367585275624249,
+      "accuracy": 0.8040540540540541,
+      "precision": 0.9745098039215686,
+      "recall_sensitivity": 0.7553191489361702,
+      "specificity": 0.9434782608695652,
+      "f1_score": 0.851027397260274,
+      "roc_auc": 0.9387802299458174,
+      "pr_auc": 0.9764042877553835,
+      "tn": 217,
+      "fp": 13,
+      "fn": 161,
+      "tp": 497
+    },
+    "resnet50": {
+      "loss": 0.5414926721169068,
+      "accuracy": 0.8344594594594594,
+      "precision": 0.974025974025974,
+      "recall_sensitivity": 0.7978723404255319,
+      "specificity": 0.9391304347826087,
+      "f1_score": 0.8771929824561403,
+      "roc_auc": 0.9374190564292322,
+      "pr_auc": 0.9762292674080064,
+      "tn": 216,
+      "fp": 14,
+      "fn": 133,
+      "tp": 525
+    }
+  },
+  "test_metrics": {
+    "loss": 0.3657186915586283,
+    "accuracy": 0.9065934065934066,
+    "precision": 0.9695024077046549,
+    "recall_sensitivity": 0.9014925373134328,
+    "specificity": 0.9208333333333333,
+    "f1_score": 0.934261407579273,
+    "roc_auc": 0.9621330845771146,
+    "pr_auc": 0.9866083355826919,
+    "tn": 221,
+    "fp": 19,
+    "fn": 66,
+    "tp": 604
+  },
+  "checkpoint_file": "best_pneumonia_model.pt"
+}

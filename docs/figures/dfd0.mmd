@@ -1,0 +1,9 @@
+flowchart LR
+    Clinician["Clinician / Healthcare Practitioner"]
+    System(("0.0\nPatient Safety Explainable AI\nClinical Decision Support System"))
+    
+    Clinician -->|"Medical Scans, Lab Reports, Modality Selection"| System
+    System -->|"Quality Rejection Alerts (HTTP 400)"| Clinician
+    System -->|"Predicted Diagnostic Classes & Calibrated Probabilities"| Clinician
+    System -->|"Grad-CAM Saliency Overlays & Blend Controls"| Clinician
+    System -->|"Extracted Biomarker Reference Ranges & Disclaimers"| Clinician

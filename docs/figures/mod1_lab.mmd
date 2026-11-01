@@ -1,0 +1,7 @@
+flowchart TD
+    InDoc["Unstructured Health Report (PDF / Image)"] --> OCR["1. Document Extraction Layer\n- Format Validation (PDF / PNG / JPEG)\n- Tesseract OCR Character Stream Extraction"]
+    OCR --> Regex["2. Regex Analyte Parser\n- Matches Standard Biomarker Names (Glucose, Hb, Creatinine, etc.)\n- Extracts Numerical Values & Units of Measurement"]
+    Regex --> RefEngine["3. Biological Reference Engine\n- Evaluates Values Against Verified Physiological Reference Ranges\n- Categorizes Status as Normal, High, or Low"]
+    RefEngine --> Out["4. Structured Results Presentation\n- Out-of-Range Indicators Displayed Prominently\n- Educational Explanations & Mandatory Physician Consultation Prompt"]
+    
+    Integrity["Integrity Safeguard:\n100% Deterministic & Auditable;\nZero Black-Box ML / No Unsupported Risk Modeling"] -.->|"Enforced Rule"| RefEngine

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-10-29T00:00:00.000Z" agent="Antigravity IDE - Academic Submission" version="21.0.0" type="device">
+  <diagram id="Skin_Lesion_Workflow" name="Skin Lesion Triage Workflow">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="40" value="Dermoscopic Lesion Image
+(HAM10000 Benchmark)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F2240;strokeColor=#0F2240;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="40" width="220" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="41" value="Defensive Quality Gate
+- Aspect Ratio &amp;lt;= 5:1 Filter
+- Variance std &amp;gt;= 5.0 (Rejects solid frames)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DC2626;strokeColor=#DC2626;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="120" width="220" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="42" value="DenseNet-121 + Dropout (0.3)
+- Evaluates Deep Pigment Morphologies
+- Raw Sigmoid Probability p" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#1E293B;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="205" width="220" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="43" value="Patient-Safety Decision Calibration
+- Standard t = 0.50 -&amp;gt; Missed 43 Malignancies
+- Calibrated t = 0.40 -&amp;gt; Sensitivity 91.70%
+- Missed Malignancies reduced to 19 cases" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#059669;strokeColor=#059669;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="290" width="220" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="44" value="Binary Triage Categorization
+- Higher-Risk (Melanoma, BCC, AKIEC)
+- Lower-Risk (Nevus, BKL, DF, VASC)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F2240;strokeColor=#0F2240;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="395" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="45" value="Grad-CAM Feature Attribution
+- Localizes Atypical Pigment Network Borders
+- Confirms Focus on Lesion Rather than Ruler Markers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D97706;strokeColor=#D97706;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="320" y="290" width="220" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="46" value="Low Precision Clinical Safeguard
+- PPV = 41.44% Mandates Biopsy Co-Pilot Role
+- Autonomous Diagnosis Strictly Disallowed" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;fontColor=#92400E;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="320" y="395" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="es1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="40" target="41">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="es2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="41" target="42">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="es3" value="Logit / Prob" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="42" target="43">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="es4" value="Calibrated Cut-Off" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="43" target="44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="es5" value="Gradients" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="42" target="45">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="es6" value="Overlay" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="45" target="44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="es7" value="Safety Rule" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#D97706;strokeWidth=2;fontSize=10;fontColor=#D97706;dashed=1;" edge="1" parent="1" source="46" target="44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

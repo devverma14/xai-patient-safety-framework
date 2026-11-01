@@ -1,0 +1,8 @@
+flowchart LR
+    TB_Raw["Original PA Radiograph (224x224)\nMulti-Site Adult CXR"] --> TB_Model["DenseNet-121 (V23_E04) Forward Pass\nP(Tuberculosis) = 0.8876"]
+    TB_Model --> TB_Conv["Target Layer: Final Dense Block Conv Layer"]
+    TB_Conv --> TB_Grad["Autograd Backward Gradient Extraction"]
+    TB_Grad --> TB_GAP["Channel-Wise Gradient Pooling (Weights alpha_k)"]
+    TB_GAP --> TB_ReLU["Linear Combination & ReLU Non-Linearity"]
+    TB_ReLU --> TB_Jet["Bilinear Interpolation to 224x224 & JET Colormap"]
+    TB_Jet --> TB_Out["Alpha-Blended Overlay\n(Localizes Apical Infiltration & Cavitary Lesions)"]

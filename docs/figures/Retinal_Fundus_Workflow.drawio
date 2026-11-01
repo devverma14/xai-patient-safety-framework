@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-10-29T00:00:00.000Z" agent="Antigravity IDE - Academic Submission" version="21.0.0" type="device">
+  <diagram id="Retinal_Fundus_Workflow" name="Retinal Fundus Workflow">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="50" value="Digital Retinal Fundus Photograph
+(APTOS 2019 Blindness Challenge)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F2240;strokeColor=#0F2240;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="40" width="220" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="51" value="Defensive Quality Gate
+- Rejects Overexposed / Out-of-Focus Frames" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DC2626;strokeColor=#DC2626;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="120" width="220" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="52" value="EfficientNet-B0 Compound Scaling
+- Uniform Depth/Width/Resolution Scaling
+- Microvascular Feature Extraction" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#1E293B;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="200" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="53" value="Diabetic Retinopathy Classification
+- Referable vs. Non-Referable DR
+- Decision Threshold: t = 0.50
+- ROC-AUC: 0.9958 | Sensitivity: 98.55% (N=547)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#059669;strokeColor=#059669;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="290" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="54" value="Grad-CAM Saliency Engine
+- Hook on Final Conv Block: features.8.0
+- Localizes Microaneurysms &amp;amp; Hard Exudates" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D97706;strokeColor=#D97706;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="320" y="290" width="220" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="55" value="Interactive Clinical Presentation
+- Screening Outcome &amp;amp; Confidence (0.98)
+- Zero-Flicker Heatmap Blend Slider
+- Tele-Ophthalmology Referral Prompt" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F2240;strokeColor=#0F2240;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="390" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="er1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="50" target="51">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="er2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="51" target="52">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="er3" value="Feature Map" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="52" target="53">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="er4" value="Hook" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="52" target="54">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="er5" value="Macular Overlay" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="54" target="55">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="er6" value="Class Prob" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="53" target="55">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

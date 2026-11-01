@@ -1,0 +1,11 @@
+flowchart TD
+    subgraph GradCAMPipeline["Gradient-Weighted Class Activation Mapping (Grad-CAM) Mathematical Pipeline"]
+        V_In["Forward Pass: Target Class Score y^c"] --> V_Hook["Target Convolutional Layer A^k (Dimensions u x v x K)"]
+        V_Hook --> V_Grad["Backward Pass: Compute Gradients (d y^c / d A_ij^k) via Autograd"]
+        V_Grad --> V_GAP["Global Average Pooling: alpha_k^c = (1/Z) * sum_i sum_j (d y^c / d A_ij^k)"]
+        V_GAP --> V_LinComb["Channel-Weighted Combination: sum_k alpha_k^c * A^k"]
+        V_LinComb --> V_ReLU["ReLU Non-Linearity: Max(0, sum_k alpha_k^c * A^k) Isolating Positive Evidence"]
+        V_ReLU --> V_Upsample["Bilinear Upsampling to Original Resolution (224x224)"]
+        V_Upsample --> V_Color["OpenCV Thermal JET Colormapping (Normalized to [0, 1])"]
+        V_Color --> V_Blend["Interactive Canvas Alpha Blending: I_blended = alpha * Heatmap + (1 - alpha) * Image"]
+    end

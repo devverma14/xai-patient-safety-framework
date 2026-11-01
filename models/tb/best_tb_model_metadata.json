@@ -1,0 +1,26 @@
+{
+  "task": "tb",
+  "modality": "xray",
+  "architecture": "densenet121",
+  "phase": "V2.3",
+  "status": "MEANINGFUL_IMPROVEMENT",
+  "v23_candidate_id": "V23_E04",
+  "threshold": 0.50,
+  "sha256": "585A60072463E143A1041F35679FB91F9A78911B93D9C88EA0BFF6E5122E4AA5",
+  "class_to_idx": {
+    "Normal": 0,
+    "Tuberculosis": 1,
+    "TB": 1
+  },
+  "idx_to_class": {
+    "0": "Normal",
+    "1": "Tuberculosis"
+  },
+  "num_classes": 2,
+  "training_sites": [
+    "shenzhen",
+    "montgomery"
+  ],
+  "use_clahe": false,
+  "selection_rule": "Highest Validation ROC-AUC & Balanced Accuracy on Pooled Site-Stratified Split"
+}

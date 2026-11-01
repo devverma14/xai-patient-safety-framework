@@ -1,0 +1,22 @@
+flowchart TD
+    User["Clinician"]
+    
+    subgraph DFD1_Subsystems["Decomposed System Processes"]
+        P1["1.0 Defensive Quality Gate"]
+        P2["2.0 Document & Image Preprocessor"]
+        P3["3.0 Deep Learning & Parsing Inference Engine"]
+        P4["4.0 Grad-CAM Explainability Engine"]
+        P5["5.0 Presentation & Visualization Subsystem"]
+    end
+
+    DS1[("D1: Model Checkpoints & Clinical Reference Ranges")]
+
+    User -->|"Uploads Raw Document or Medical Scan"| P1
+    P1 -->|"Rejected Input: HTTP 400"| User
+    P1 -->|"Approved Clean Image / File Stream"| P2
+    P2 -->|"Normalized Tensor [3, 224, 224] / Parsed Text Stream"| P3
+    DS1 -->|"Pre-Trained CNN Weights & Reference Interval Bounds"| P3
+    P3 -->|"Target Class Activation Logits y^c"| P4
+    P3 -->|"Classification Probabilities & Triage Status"| P5
+    P4 -->|"Saliency Heatmaps & Localization Gradients"| P5
+    P5 -->|"Interactive Grad-CAM Blended View & Lab Findings"| User

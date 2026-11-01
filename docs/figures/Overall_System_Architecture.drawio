@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-10-29T00:00:00.000Z" agent="Antigravity IDE - Academic Submission" version="21.0.0" type="device">
+  <diagram id="Overall_System_Architecture" name="Overall System Architecture">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="100" value="CLIENT PRESENTATION TIER
+Next.js 14 / React 18 / TypeScript / Tailwind CSS
+- Modality Selector &amp;amp; Auto-Scroll Router
+- Interactive HTML5 Canvas Heatmap Blend Slider
+- Patient-Friendly Findings &amp;amp; Out-of-Range Indicators" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F2240;strokeColor=#0F2240;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="40" width="500" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="101" value="REST API GATEWAY &amp;amp; DEFENSIVE SECURITY TIER
+FastAPI Microservice (Uvicorn ASGI)
+- Strict Defensive Input Quality Gate (Dimensions, Aspect Ratio, Variance, Focus Blur)
+- Ephemeral In-Memory Buffer (Zero-Retention Privacy Policy)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#1E293B;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="145" width="500" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="102" value="INFERENCE &amp;amp; ANALYTICAL TIER
+PyTorch Deep Learning &amp;amp; Document Parsing Engine
+- Tesseract OCR (v5.3) &amp;amp; Regex Blood Panel Extractor
+- DenseNet-121 (Pediatric CXR Pneumonia, Multi-Site CXR TB, HAM10000 Skin Lesion)
+- EfficientNet-B0 (APTOS 2019 Retinal Fundus Diabetic Retinopathy)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#059669;strokeColor=#059669;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="250" width="500" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="103" value="EXPLAINABILITY (XAI) &amp;amp; AUDIT TIER
+Model Interpretability &amp;amp; Safety Guardrails
+- Grad-CAM Autograd Backward Hook Engine (Convolutional Layer Gradient Pooling)
+- Tree SHAP Cooperative Game-Theoretic Feature Attributions (Tabular Research)
+- Mandatory Biological Misattribution Disclaimer &amp;amp; Audit Log Dispatcher" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D97706;strokeColor=#D97706;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="360" width="500" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ea1" value="HTTP REST / JSON (multipart/form-data)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="100" target="101">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea2" value="Verified Image/Document Buffer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="101" target="102">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea3" value="Forward Logits &amp;amp; Target Backprop Gradients" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F2240;strokeWidth=2;fontSize=10;fontColor=#0F2240;" edge="1" parent="1" source="102" target="103">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
